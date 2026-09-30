@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel-perfect landing from a Figma mockup</title>
+<meta name="description" content="Demo: a responsive landing page built from a Figma Community mockup. The mockup and the live page side by side at the same width.">
+<link rel="stylesheet" href="demo/demo.css">
+</head>
+<body>
+
+<header class="top">
+  <h1>Pixel-perfect landing from a Figma mockup</h1>
+  <p class="top__lead">
+    A Figma Community mockup coded by hand: plain HTML and CSS, no frameworks,
+    no build step, no CSS libraries.<br>
+    Below, the mockup sits next to the live page at the same width. Both
+    breakpoints are compared, taken from the widths of the mockup frames.
+  </p>
+  <p class="top__links">
+    <a class="btn" href="landing/index.html">Open the landing</a>
+    <a class="btn btn--ghost" href="live/index.html">Open the live version</a>
+    <a class="btn btn--ghost" href="https://github.com/skanbl4/pixel-perfect-landing">Source code</a>
+  </p>
+</header>
+
+<main>
+
+  <section class="cmp" data-w="1920" data-h="7690">
+    <div class="cmp__head">
+      <h2>Desktop — 1920&nbsp;px</h2>
+      <p class="cmp__note">Width of the desktop frame in the mockup</p>
+      <div class="switch" role="group" aria-label="Comparison mode">
+        <button type="button" class="switch__btn is-on" data-mode="side">Side by side</button>
+        <button type="button" class="switch__btn" data-mode="over">Overlay</button>
+      </div>
+      <label class="fade" hidden>
+        Page opacity
+        <input type="range" min="0" max="100" value="50">
+      </label>
+    </div>
+    <div class="cmp__body" data-mode="side">
+      <figure class="pane">
+        <figcaption>Mockup</figcaption>
+        <div class="scaler"><img src="assets/reference/desktop-1920.png" width="1920" height="7690" alt="Mockup export, desktop frame"></div>
+      </figure>
+      <figure class="pane">
+        <figcaption>Live page</figcaption>
+        <div class="scaler"><iframe src="landing/index.html" scrolling="no" width="1920" height="7690" loading="lazy" title="Live page, 1920 px"></iframe></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cmp" data-w="375" data-h="8350">
+    <div class="cmp__head">
+      <h2>Mobile — 375&nbsp;px</h2>
+      <p class="cmp__note">Width of the mobile frame in the mockup</p>
+      <div class="switch" role="group" aria-label="Comparison mode">
+        <button type="button" class="switch__btn is-on" data-mode="side">Side by side</button>
+        <button type="button" class="switch__btn" data-mode="over">Overlay</button>
+      </div>
+      <label class="fade" hidden>
+        Page opacity
+        <input type="range" min="0" max="100" value="50">
+      </label>
+    </div>
+    <div class="cmp__body" data-mode="side">
+      <figure class="pane">
+        <figcaption>Mockup</figcaption>
+        <div class="scaler"><img src="assets/reference/mobile-375.png" width="375" height="8350" alt="Mockup export, mobile frame"></div>
+      </figure>
+      <figure class="pane">
+        <figcaption>Live page</figcaption>
+        <div class="scaler"><iframe src="landing/index.html" scrolling="no" width="375" height="8350" loading="lazy" title="Live page, 375 px"></iframe></div>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bottom">
+  <h2>Honest notes</h2>
+  <ul>
+    <li><b>Font.</b> The mockup uses Segoe UI, a Windows system font that cannot be
+      served on the web. It is replaced with <a href="https://github.com/microsoft/Selawik">Selawik</a>,
+      Microsoft's open replacement under SIL OFL, metric-compatible with Segoe UI.
+      The compatibility is checked against the mockup: where the font size is right,
+      line boxes match to the pixel. The remaining difference on the regular weight
+      is 2–3% of line length.</li>
+    <li><b>Inconsistencies inside the mockup.</b> The mobile and desktop frames
+      disagree in places: different lists in the third band, accordion answers
+      in different letter case, two title lines on mobile set in different sizes
+      (36 and 32), footer links on mobile without underline and with a different
+      conjunction. All of it is reproduced frame by frame rather than unified:
+      a difference from the mockup is a bug, even when it looks nicer.</li>
+    <li><b>Status bar in the mobile export.</b> The clock, wifi and battery at the
+      top of the frame export are the Figma frame, not the page. In the overlay
+      they never match, and that is how it should be.</li>
+    <li><b>Widths in between.</b> A pixel comparison is only possible at two widths,
+      because the mockup has no other frames. Between them the layout is fluid,
+      and that is an engineering decision rather than a match to a picture.</li>
+  </ul>
+
+  <h2>Credits</h2>
+  <p>
+    Mockup: <a href="https://www.figma.com/community/file/1198413387972983198/freebie-interactive-website-mobile-responsive-designs">Freebie
+    Interactive Website &amp; Mobile Responsive Designs</a>
+    by <a href="https://www.figma.com/@imzul">Imzul Design Agency</a>, licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<br>
+    Illustrations: <a href="https://www.drawkit.com/">DrawKit</a>.
+    Font: <a href="https://github.com/microsoft/Selawik">Selawik</a>, SIL OFL.
+    Slider photos in the live version: <a href="https://unsplash.com/license">Unsplash</a>.
+  </p>
+</footer>
+
+<script src="demo/demo.js"></script>
+</body>
+</html>

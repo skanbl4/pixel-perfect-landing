@@ -1,0 +1,46 @@
+/* Effects only. Once the opening animations finish, the page matches landing/ pixel for pixel. */
+
+/* Illustrations */
+.fx-art :is(.hero__art, .intro__art, .benefits__art):not(.art-shown) { visibility: hidden; }
+.art-fx { position: absolute; margin: 0; pointer-events: none; }
+
+/* Typing title: the text stays in place, the typed part is revealed with ::highlight() */
+.is-typing .hero__title { color: transparent; }
+::highlight(typed) { color: var(--color-dark); }
+
+.hero__title { position: relative; }
+.caret--ghost {
+  position: absolute;
+  margin: 0;
+  translate: none;
+  background: var(--color-dark);
+  pointer-events: none;
+}
+
+@keyframes caret-blink {
+  0%, 49.9% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret--wait  { animation: caret-blink 1.06s infinite; }
+
+.caret--blink { animation: caret-blink 1.06s 5; }
+
+/* Testimonial slider */
+.quote {
+  position: relative;
+
+  touch-action: pan-y pinch-zoom;
+}
+.quote__photo--next { position: absolute; margin: 0; pointer-events: none; }
+
+.quote__line { display: block; overflow: hidden; }
+.quote__line > span { display: block; }
+
+.quote__arrow svg { transition: translate .2s ease; }
+.quote__arrow--prev:hover svg { translate: -6px 0; }
+.quote__arrow--next:hover svg { translate: 6px 0; }
+.quote__arrow:focus-visible { outline: 2px solid var(--color-dark); outline-offset: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .quote__arrow svg { transition: none; }
+}

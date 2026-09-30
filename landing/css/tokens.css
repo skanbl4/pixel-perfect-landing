@@ -1,0 +1,136 @@
+/* Design tokens measured from the mockup. Some font sizes are fractional because the mockup uses them. */
+:root {
+  --color-white:      #FFFFFF;
+  --color-white-warm: #FFFAEB;
+  --color-yellow:     #F9B800;
+  --color-dark:       #262626;
+  --color-grey:       #787878;
+  --color-light-0:    #FFF1C9;
+  --color-light-1:    #FEEDBC;
+  --color-light-2:    #FFE18B;
+  --color-light-3:    #D3B970;
+  --color-dark-80:  rgb(38 38 38 / .8);
+  --color-dark-12:  rgb(38 38 38 / .12);
+
+  /* Diagonal cut: the angle from the mockup, depth in container units */
+  --angle: 12deg;
+  --cut: calc(100cqw * tan(var(--angle)));
+
+  --edge-drop: calc(min(var(--w-wide), 100cqw - var(--pad-x) * 2) / 2 * tan(var(--angle)));
+  --band-overlap: 6px;
+
+  --fs-h1: 32px;   --lh-h1: 40px;
+  --lead-scale: 1.125;
+  --fs-h2: 24px;   --lh-h2: 1.25;
+
+  --fs-h3: 36px;   --lh-h3: 1.33;
+  --fs-card-title: 23px;
+  --fs-quote-title: 30px;
+  --fs-eyebrow: 16px;
+
+  --fs-body:   20px; --lh-body: 1.35;
+  --fs-body-s: 16px; --lh-body-s: 1.5;
+  --fs-body-s-b: 18px;
+  --fs-button: 18px;
+
+  --fs-pill: 17.2px;
+  --fs-lead: 19.7px;
+  --fs-quote-name: 23px;
+  --fs-faq-q: 24px;        --lh-faq-q: 32px;
+  --fs-faq-a: 16.8px;      --lh-faq-a: 24px;
+  --fs-footer-title: 30px; --lh-footer-title: 40px;
+  --fs-footer-bottom: 16.4px;
+  --fs-num:    70px;
+  --tracking-body: 0.02em;
+
+  --pad-x:      20px;
+  --w-header:   350px;
+  --w-wide:     335px;
+  --w-content:  335px;
+
+  --h-header:  72px;  --r-header: 36px;
+  --h-pill:    49px;  --r-pill:   24px;
+  --h-button:  60px;  --r-button: 30px;  --w-button: 335px;
+  --gap-pill:  14px;
+
+  --card-w: 335px;  --card-h: 383px;  --r-card: 57px;
+  --gap-card: 30px; --card-stagger: 0px;
+
+  --quote-w: 335px; --r-quote: 57px;
+  --photo:   272px;
+
+  --r-faq: 40px;  --r-faq-open: 50px;  --gap-faq: 14px;
+
+  --sec-pad: 72px;
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  :root {
+    --pad-x: 32px;
+    --w-header:  600px;
+    --w-wide:    560px;
+    --w-content: 560px;
+    --w-button:  300px;
+    --quote-w:   560px;
+    --card-w:    560px;
+    --fs-h1: 44px;
+    --fs-h2: 28px;
+
+    --lead-scale: 1;
+  }
+}
+
+/* Desktop: fluid between 1140 and 1920 */
+@media (min-width: 1140px) {
+  :root {
+    --fs-h1: clamp(56px, 4.9vw, 80px);   --lh-h1: 1.125;
+    --fs-h2: 72px;   --lh-h2: 1.25;
+    --fs-h3: 60px;   --lh-h3: 72px;
+    --fs-eyebrow: 29.7px;
+
+    --fs-body:   20px; --lh-body: 1.33;
+    --fs-body-s: 16.5px; --lh-body-s: 1.4;
+    --fs-body-s-b: 19px;
+    --fs-button: 24px;
+    --fs-pill: 20.6px;
+    --fs-faq-q: 30.9px;       --lh-faq-q: 1.165;
+    --fs-faq-a: 30px;         --lh-faq-a: 40px;
+    --fs-footer-title: 50px;  --lh-footer-title: 1.3;
+    --fs-footer-bottom: 20.6px;
+    --fs-num:    72px;
+    --fs-card-title: 24px;
+    --fs-quote-title: 50px;
+
+    --fs-section: 50px;  --lh-section: 66px;
+
+    --fs-body-l: 30px;   --lh-body-l: 40px;
+
+    --pad-x:     clamp(56px, 9vw, 135px);
+    --w-header:  1600px;
+    --w-wide:    1650px;
+    --w-content: 1410px;
+
+    --h-header:  96px;  --r-header: 48px;
+    --h-pill:    58px;  --r-pill:   29px;
+    --h-button:  78px;  --r-button: 39px;  --w-button: 350px;
+    --gap-pill:  14px;
+
+    --card-w: min(350px, 21.5vw);  --card-h: 400px;  --r-card: 60px;
+    --gap-card: min(60px, 4vw);    --card-stagger: 123px;
+    --card-bleed: min(55px, 3.7vw);
+
+    --quote-w: 1650px; --r-quote: 100px;
+
+    --photo:   clamp(300px, 25vw, 472px);
+    --quote-pad: clamp(56px, 7.2vw, 135px);
+    --quote-gap: clamp(32px, 3.8vw, 72px);
+
+    --hero-art: min(684px, 44vw);
+    --band-art: min(622px, 40vw);
+
+    --r-faq: 40px;  --r-faq-open: 60px;  --gap-faq: 24px;
+
+    --sec-pad: 160px;
+  }
+}

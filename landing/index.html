@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paint — Cursus Integer Consequat Tristique</title>
+<meta name="description" content="Pixel-perfect responsive landing page built from a Figma Community mockup.">
+<link rel="icon" href="data:,">
+
+<link rel="preload" href="fonts/selawik-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/selawik-semibold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/selawik-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-check" viewBox="0 0 30 30">
+    <path d="M15 2.51953C8.08594 2.51953 2.51953 8.08594 2.51953 15C2.51953 21.9141 8.08594 27.4805 15 27.4805C21.9141 27.4805 27.4805 21.9141 27.4805 15C27.4805 8.08594 21.9141 2.51953 15 2.51953ZM15 25.0195C9.49219 25.0195 4.98047 20.5078 4.98047 15C4.98047 9.49219 9.49219 4.98047 15 4.98047C20.5078 4.98047 25.0195 9.49219 25.0195 15C25.0195 20.5078 20.5078 25.0195 15 25.0195ZM20.7422 9.49219L12.4805 17.6953L9.25781 14.4727L7.5 16.2305L12.4805 21.2695L22.5 11.2695L20.7422 9.49219Z"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 30 30">
+    <path d="M18.75 6.26953L16.9922 8.02734L22.7344 13.7695H2.51953V16.2305H22.7344L16.9922 21.9727L18.75 23.7305L27.4805 15L18.75 6.26953Z"/>
+  </symbol>
+
+  <symbol id="i-arrow-solid" viewBox="0 0 40 17">
+    <path d="M0 6H31V0L40 8.5L31 17V11H0Z"/>
+  </symbol>
+  <symbol id="i-plus" viewBox="0 0 35 35">
+    <path d="M34.922 19.922h-15v15H15v-15H0V15h15V0h4.922v15h15v4.922Z"/>
+  </symbol>
+  <symbol id="i-minus" viewBox="0 0 35 35">
+    <path d="M34.922 19.922H0V15h34.922v4.922Z"/>
+  </symbol>
+</svg>
+
+<div class="page">
+
+  <header class="header">
+    <div class="header__bar">
+      <a class="header__logo" href="#">
+        <img src="../assets/img/header-logo.png" alt="Paint" width="127" height="63">
+      </a>
+      <button class="lang" type="button" aria-label="Language: English">
+        <img class="lang__flag" src="../assets/img/header-flag.png" alt="" width="40" height="26">
+        <span class="lang__caret" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__text">
+        <p class="eyebrow">Risus praesent vulputate.</p>
+        <h1 class="hero__title"><span class="hero__title-lead">Cursus Integer</span> Consequat Tristique.<span class="caret" aria-hidden="true"></span></h1>
+        <ul class="pills">
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Cursus Integer</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Integer Consequat</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Tellus Euismod Pellentesque</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Aliquot Tristique</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Pellentesque Tempus</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Mauris Fermentum Praesent</span></li>
+        </ul>
+        <a class="btn btn--accent" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <img class="hero__art" src="../assets/img/hero-woman-laptop.svg" alt="" width="684" height="501">
+    </div>
+  </section>
+
+  <section class="band band--accent intro">
+    <div class="intro__inner">
+      <div class="intro__text">
+        <h2 class="intro__title">Phasellus a vitae iaculis magna eleifend pulvinar velit odio.</h2>
+        <p class="lead"><a href="#">Vulputate et vulputate suspendisse natoque!</a></p>
+        <p class="intro__body">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis vulputate et vulputate suspendisse natoque id tellus consectetur pulvinar et.</p>
+        <a class="btn btn--dark" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <img class="intro__art" src="../assets/img/intro-woman-chat.svg" alt="" width="622" height="503">
+    </div>
+  </section>
+
+  <section class="band band--dark steps">
+    <div class="steps__inner">
+      <div class="steps__text">
+        <p class="steps__kicker">Quisque porttitor vitae vel amet neque scelerisque mattis. Consectetur nibh velit magna consectetur leo.</p>
+        <h2 class="steps__title">Cursus Integer Conseq Aliquam Tristique.</h2>
+        <a class="btn btn--light" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="cards">
+        <li class="card card--light">
+          <img class="card__icon" src="../assets/img/cards-icon-1.png" alt="" width="60" height="60">
+          <p class="card__num">1<span class="card__dot">.</span></p>
+          <h3 class="card__title">Phasellus Vitae</h3>
+          <p class="card__meta"><b>Quisque</b><br>Porttitor Vitae Vel Amet</p>
+        </li>
+        <li class="card card--accent">
+          <img class="card__icon" src="../assets/img/cards-icon-2.png" alt="" width="50" height="50">
+          <p class="card__num">2<span class="card__dot">.</span></p>
+          <h3 class="card__title">Iaculis Magna</h3>
+          <p class="card__meta"><b>Porttitor</b><br>Neque Scelerisque Mattis.</p>
+        </li>
+        <li class="card card--accent">
+          <img class="card__icon" src="../assets/img/cards-icon-3.png" alt="" width="50" height="50">
+          <p class="card__num">3<span class="card__dot">.</span></p>
+          <h3 class="card__title">Eleifend Pulvinar</h3>
+          <p class="card__meta"><b>Vitae</b><br>Consectetur Nibh Velit</p>
+        </li>
+        <li class="card card--light">
+          <img class="card__icon" src="../assets/img/cards-icon-4.png" alt="" width="50" height="50">
+          <p class="card__num">4<span class="card__dot">.</span></p>
+          <h3 class="card__title">Velit Odio Phir</h3>
+          <p class="card__meta"><b>Ametneq</b><br>Magna Consectetur Leo.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="quote-slot">
+  <article class="quote">
+    <img class="quote__photo" src="../assets/img/testimonial-photo.jpg" alt="Holly Davidson" width="472" height="472">
+    <div class="quote__text">
+      <h2 class="quote__title">What our customers thought?</h2>
+      <p class="quote__body">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+      <p class="quote__name">Holly Davidson</p>
+      <div class="quote__nav">
+        <button class="quote__arrow quote__arrow--prev" type="button" aria-label="Previous"><svg><use href="#i-arrow-solid"/></svg></button>
+        <button class="quote__arrow quote__arrow--next" type="button" aria-label="Next"><svg><use href="#i-arrow-solid"/></svg></button>
+      </div>
+    </div>
+  </article>
+  </div>
+
+  <section class="band band--accent benefits">
+    <div class="benefits__inner">
+      <div class="benefits__text">
+        <h2 class="benefits__title">Cursus Integer consequat Tristique.</h2>
+
+        <ul class="pills pills--mobile">
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Cursus Integer</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Integer Consequat</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Tellus Euismod Pellentesque</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Aliquot Tristique</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Pellentesque Tempus</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Mauris Fermentum Praesent</span></li>
+        </ul>
+        <ul class="pills pills--desktop">
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Ac viverra sed risus praesent vulputate.</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Natoqu consectetur pulvinar.</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Sollicitudin ornare tempus nulla varius pulvinar.</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Varius pulvinar</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Natoque id tellus consectetur</span></li>
+          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Vulputate et vulputate suspendisse</span></li>
+        </ul>
+        <a class="btn btn--dark" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <img class="benefits__art" src="../assets/img/benefits-woman-open.svg" alt="" width="622" height="569">
+    </div>
+  </section>
+
+  <section class="band band--dark faq">
+    <div class="faq__inner">
+      <h2 class="faq__title">Phasellus a vitae iaculis magna.</h2>
+      <p class="faq__sub">Phasellus a vitae iaculis magna eleifend pulvinar velit odio.</p>
+      <div class="faq__list">
+        <details class="faq__item" open>
+          <summary class="faq__q">Quam vehicula faucibus amet lorem.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis. Mauris fermentum praesent tellus euismod.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Pellentesque tempus sed phasellus vel.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Mauris fermentum praesent tellus euismod pellentesque urna ac massa in.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Vulputate et vulputate suspendisse natoque id tellus consectetur pulvinar et.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Sollicitudin ornare tempus felis nulla varius pulvinar nibh viverra ornare.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Consectetur nibh velit magna consectetur leo.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Quisque porttitor vitae vel amet neque scelerisque mattis.<span class="faq__sign" aria-hidden="true"><svg class="faq__plus"><use href="#i-plus"/></svg><svg class="faq__minus"><use href="#i-minus"/></svg></span></summary>
+          <p class="faq__a">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__cta">
+        <h2 class="footer__title">Vulputate et pulvinar ethre Suspendisse tellus consecteur</h2>
+        <a class="btn btn--accent btn--sm" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">Copyright &copy; 2022 Lorem Ipsum.</p>
+        <p class="footer__links"><a href="#">Privacy Policy</a> | <a href="#">Terms <span class="amp">&amp;</span><span class="conj">and</span> Conditions</a></p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
