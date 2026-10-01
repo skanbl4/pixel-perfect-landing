@@ -734,17 +734,25 @@ function reserveHeight() {
 }
 addEventListener('resize', () => { if (reserved && !busy) reserveHeight(); });
 
+// Clicks during a change are not dropped: they add up, and once the current
+// change ends the slider goes straight to the slide the whole series asked for
+let pending = 0;
 async function go(dir) {
+  pending += dir;
   if (busy) return;
   busy = true;
-  reserveHeight();
   region.setAttribute('aria-busy', 'true');
-  current = (current + dir + slides.length) % slides.length;
-  const slide = slides[current];
-  await Promise.all([swapPhoto(slide), swapText(slide, dir)]);
-
-  reserveHeight();
-  announceSlide();
+  while (pending % slides.length) {
+    const step = pending;
+    pending = 0;
+    reserveHeight();
+    current = (current + step % slides.length + slides.length) % slides.length;
+    const slide = slides[current];
+    await Promise.all([swapPhoto(slide), swapText(slide, Math.sign(step))]);
+    reserveHeight();
+    announceSlide();
+  }
+  pending = 0;
   region.setAttribute('aria-busy', 'false');
   busy = false;
 }
