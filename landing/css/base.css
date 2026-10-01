@@ -48,5 +48,5 @@ body {
 }
 
 h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); font-weight: 700; letter-spacing: 0; }
-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); font-weight: 700; letter-spacing: 0; }
+h2 { font-weight: 700; letter-spacing: 0; }
 h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); font-weight: 700; letter-spacing: 0; }

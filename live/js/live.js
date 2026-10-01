@@ -4,25 +4,27 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 const root = document.documentElement;
 const wait = ms => new Promise(r => setTimeout(r, ms));
-const EASE_SOFT = 'cubic-bezier(.2, .7, .2, 1)';
+const EASE_OUT = 'cubic-bezier(.2, .7, .2, 1)';
+const EASE_IN = 'cubic-bezier(.6, 0, .8, .3)';
 const EASE_SPRING = 'cubic-bezier(.34, 1.5, .64, 1)';
 const random = (min, max) => min + Math.random() * (max - min);
 
 // Timings in ms, in one place to tune the feel.
 const FX = {
-  startDelay: 500,                    // pause after the page has loaded and painted
+  startDelay: 500,                    // pause after the first paint
   appear: 900,                        // illustration fade and slide in
   cycleMin: 8000, cycleMax: 14000,    // one cycle of card motion; every card moves once per cycle
   loop: true,                         // keep the cards moving while the picture is in view
 };
 
-// Effects start only when the visitor can see them: page loaded, fonts ready,
-// first frame painted, then a short pause.
+// Effects start only when the visitor can see them: markup parsed, fonts ready,
+// first frame painted, then a short pause. Images are not awaited: on a slow
+// line the page would stand still for seconds with the title hidden.
 const pageReady = new Promise(resolve => {
-  const go = () => document.fonts.ready.then(() =>
-    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, FX.startDelay))));
-  if (document.readyState === 'complete') go();
-  else addEventListener('load', go, { once: true });
+  const go = () => requestAnimationFrame(() => document.fonts.ready.then(() =>
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, FX.startDelay)))));
+  if (document.readyState !== 'loading') go();
+  else addEventListener('DOMContentLoaded', go, { once: true });
 });
 
 let lampOn;
@@ -213,15 +215,25 @@ async function mountCopy(a) {
   svg.classList.add('art-fx');
   svg.setAttribute('aria-hidden', 'true');
   a.img.after(svg);
+  placeCopy(a, svg);
+  return svg;
+}
+
+// Placed by the difference of the two boxes, not by offsets: .page is a
+// container and the hero picture has a translate. A running slide-in is
+// subtracted, so a re-place mid-animation lands right.
+function placeCopy(a, svg = a.svg) {
   const target = a.img.getBoundingClientRect();
   Object.assign(svg.style, { left: '0px', top: '0px', width: `${target.width}px`, height: `${target.height}px` });
   const at = svg.getBoundingClientRect();
-  Object.assign(svg.style, { left: `${target.left - at.left}px`, top: `${target.top - at.top}px` });
-  return svg;
+  const [tx = 0, ty = 0] = (getComputedStyle(svg).translate.match(/-?[\d.]+/g) || []).map(Number);
+  Object.assign(svg.style, { left: `${target.left - at.left + tx}px`, top: `${target.top - at.top + ty}px` });
 }
 
 async function playArt(a) {
   a.state = 'playing';
+  // The <img> takes over when the copy goes: it must be decoded by then
+  await Promise.race([a.img.decode().catch(() => {}), wait(3000)]);
   let svg;
   try {
     svg = await mountCopy(a);
@@ -229,14 +241,14 @@ async function playArt(a) {
     a.img.classList.add('art-shown');
     await a.img.animate(
       [{ opacity: 0, translate: '0 24px' }, { opacity: 1, translate: '0 0' }],
-      { duration: FX.appear, easing: EASE_SOFT }).finished.catch(() => {});
+      { duration: FX.appear, easing: EASE_OUT }).finished.catch(() => {});
     return showArt(a);
   }
   a.svg = svg;
   a.img.classList.add('art-hidden');
   const appear = svg.animate(
     [{ opacity: 0, translate: '0 24px' }, { opacity: 1, translate: '0 0' }],
-    { duration: FX.appear, easing: EASE_SOFT, fill: 'backwards' }).finished;
+    { duration: FX.appear, easing: EASE_OUT, fill: 'backwards' }).finished;
   await Promise.all([appear, DETAILS[a.detail].intro(svg)]);
   showArt(a);
   keepAlive(a);
@@ -257,22 +269,37 @@ let lastScroll = 0;
 addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
 const pageIsStill = () => !glideFrame && performance.now() - lastScroll > 300;
 
+// Runs after a scroll has settled: on scrollend, or 150 ms after the last
+// scroll event where the browser lacks it (not while a finger holds the page).
+let touching = false;
+function onScrollSettled(fn) {
+  if ('onscrollend' in window) return addEventListener('scrollend', fn);
+  let t;
+  const later = () => { clearTimeout(t); t = setTimeout(() => { if (!touching) fn(); }, 150); };
+  addEventListener('scroll', later, { passive: true });
+  addEventListener('touchend', later, { passive: true });
+}
+
 // Back to the plain <img>: when the picture is off screen, in a background tab
-// or after a resize (the copy was placed for the old layout).
+// or after the layout changed (the copy was placed for the old one).
 function unmountCopy(a) {
   a.svg?.remove();
   a.svg = null;
   a.img.classList.remove('art-hidden');
 }
 
-// Cycles of card motion while the picture is in view
+// Cycles of card motion while the picture is in view. Between cycles the loop
+// sleeps until something changes: visibility, the tab, the layout.
+const wanted = a => FX.loop && !document.hidden && a.visible;
 async function keepAlive(a) {
   if (reduceMotion.matches || a.alive) return;
   a.alive = true;
+  a.visible = shareVisible(a.img) >= .3;
+  new IntersectionObserver(([e]) => { a.visible = e.intersectionRatio >= .3; a.wake?.(); }, { threshold: .3 }).observe(a.img);
   for (;;) {
-    if (!FX.loop || document.hidden || shareVisible(a.img) < .3) {
+    if (!wanted(a)) {
       unmountCopy(a);
-      await wait(400);
+      await new Promise(r => { a.wake = r; });
       continue;
     }
     if (!a.svg) {
@@ -281,20 +308,25 @@ async function keepAlive(a) {
     }
     // A cycle runs to its end unless the picture leaves the screen: then the
     // copy goes away at once, and a fresh cycle starts when it comes back.
-    let running = true;
     const cycle = DETAILS[a.detail].cycle(a.svg, random(FX.cycleMin, FX.cycleMax)).catch(() => {});
-    const left = (async () => {
-      while (running) {
-        await wait(400);
-        if (!FX.loop || document.hidden || shareVisible(a.img) < .3 || !a.svg) return true;
-      }
-    })();
-    const leftScreen = await Promise.race([cycle.then(() => false), left]);
-    running = false;
-    if (leftScreen) unmountCopy(a);
+    const woken = new Promise(r => { a.wake = r; });
+    if (await Promise.race([cycle.then(() => false), woken.then(() => true)])) unmountCopy(a);
   }
 }
-addEventListener('resize', () => arts.forEach(unmountCopy));
+addEventListener('visibilitychange', () => arts.forEach(a => a.wake?.()));
+
+// Only a new width changes the layout (a phone hides its address bar often):
+// then the copy is re-placed while its story plays, otherwise removed and put
+// back by keepAlive.
+let lastWidth = innerWidth;
+addEventListener('resize', () => {
+  if (innerWidth === lastWidth) return;
+  lastWidth = innerWidth;
+  for (const a of arts) {
+    if (!a.svg) continue;
+    if (a.state === 'playing') placeCopy(a); else { unmountCopy(a); a.wake?.(); }
+  }
+});
 
 // Bands 1 and 3 play once the centre of the picture has passed the middle
 // of the screen and scrolling has stopped, so the visitor is looking at it.
@@ -311,13 +343,13 @@ function checkArts() {
 }
 
 if (root.classList.contains('fx-art')) {
-  root.dataset.art = 'on';
   pageReady.then(() => {
+    root.dataset.art = 'on';
     // The hero plays right away only if it is on screen (after a reload further
     // down the page it is not; then it is simply shown, like the title).
     for (const a of arts) if (a.now) shareVisible(a.img) > 0 ? playArt(a) : skipArt(a);
     checkArts();
-    addEventListener('scrollend', () => setTimeout(checkArts, 350));
+    onScrollSettled(() => setTimeout(checkArts, 350));
     addEventListener('resize', checkArts);
   });
 } else {
@@ -348,8 +380,10 @@ function keepCaretBlinking() {
 
 async function typeTitle() {
   if (!root.classList.contains('is-typing')) return keepCaretBlinking();
-  root.dataset.typing = 'on';
   await pageReady;
+  // The failsafe may have shown the title by now: then it is not typed
+  if (!root.classList.contains('is-typing')) return keepCaretBlinking();
+  root.dataset.typing = 'on';
   let ghost = null;
   const finish = () => {
     CSS.highlights.delete('typed');
@@ -397,7 +431,7 @@ async function typeTitle() {
   const typed = new Range();
   typed.setStart(chars[0][0], chars[0][1]);
   typed.setEnd(chars[0][0], chars[0][1]);
-  CSS.highlights.set('typed', new Highlight(typed));
+  CSS.highlights.set('typed', new Highlight(typed));   // the range is live: setEnd moves the highlight
   place(0);
 
   await Promise.all([wait(900), Promise.race([lampDone, wait(4000)])]);
@@ -405,7 +439,6 @@ async function typeTitle() {
   for (let k = 1; k <= N; k++) {
     await wait(keyDelay(chars[k - 1][0].data[chars[k - 1][1]]));
     typed.setEnd(chars[k - 1][0], chars[k - 1][1] + 1);
-    CSS.highlights.set('typed', new Highlight(typed));
     place(k);
   }
   await wait(120);
@@ -465,7 +498,6 @@ function seen(st, y) {
 let rest = scrollY;
 let glideFrame = 0;
 let lastInput = '';
-let touching = false;
 
 const NAV_KEYS = new Set(['Tab', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown', ' ']);
 const onScrollbar = e => e.target === root && e.clientX >= root.clientWidth;
@@ -528,13 +560,7 @@ function onScrollEnd() {
   glide(best);
 }
 
-if ('onscrollend' in window) addEventListener('scrollend', onScrollEnd);
-else {
-  let t;
-  const later = () => { clearTimeout(t); t = setTimeout(() => { if (!touching) onScrollEnd(); }, 150); };
-  addEventListener('scroll', later, { passive: true });
-  addEventListener('touchend', later, { passive: true });
-}
+onScrollSettled(onScrollEnd);
 
 // Wheel bounce filter: a single reversed notch right after a notch the other way
 // is dropped. Needs a non-passive listener to cancel it.
@@ -596,11 +622,11 @@ for (const [type, test] of Object.entries(interrupts)) {
 const quote = document.querySelector('.quote');
 const photo = quote.querySelector('.quote__photo');
 const body  = quote.querySelector('.quote__body');
-const name  = quote.querySelector('.quote__name');
-const live  = quote.querySelector('.quote__text');
+const author = quote.querySelector('.quote__name');
+const region = quote.querySelector('.quote__text');
 
 const slides = [
-  { photo: photo.getAttribute('src'), name: name.textContent, text: body.textContent },
+  { photo: photo.getAttribute('src'), name: author.textContent, text: body.textContent },
   { photo: '../assets/img/testimonial-photo-2.jpg', name: 'Mia Sorensen',
     text: 'Pellentesque tempus sed phasellus vel mauris fermentum praesent. Tellus euismod pellentesque urna ac massa in vulputate natoque.' },
   { photo: '../assets/img/testimonial-photo-3.jpg', name: 'Daniel Moreno',
@@ -609,13 +635,23 @@ const slides = [
     text: 'Sollicitudin ornare tempus felis nulla varius pulvinar nibh viverra. Quam vehicula faucibus amet lorem condimentum blandit rutrum.' },
 ];
 
-for (const s of slides.slice(1)) new Image().src = s.photo;
+// The other photos are fetched after everything else has loaded and the page
+// is idle, so they never compete with the pictures the visitor is looking at
+const loaded = new Promise(r => document.readyState === 'complete' ? r() : addEventListener('load', r, { once: true }));
+loaded.then(() => (window.requestIdleCallback || (f => setTimeout(f, 1000)))(() => {
+  for (const s of slides.slice(1)) new Image().src = s.photo;
+}));
 
 let current = 0;
 let busy = false;
 
-const EASE_OUT = 'cubic-bezier(.2, .7, .2, 1)';
-const EASE_IN  = 'cubic-bezier(.6, 0, .8, .3)';
+// Carousel semantics for screen readers: the static page has one testimonial
+quote.setAttribute('aria-roledescription', 'carousel');
+quote.setAttribute('aria-label', 'Testimonials');
+region.setAttribute('role', 'group');
+region.setAttribute('aria-roledescription', 'slide');
+const announceSlide = () => region.setAttribute('aria-label', `${current + 1} of ${slides.length}`);
+announceSlide();
 
 function splitLines(el) {
   const words = el.textContent.trim().split(/\s+/);
@@ -639,11 +675,11 @@ function moveLines(lines, from, to, easing, duration) {
 }
 
 async function swapText(slide, dir) {
-  const els = [body, name];
+  const els = [body, author];
   if (reduceMotion.matches) {
     await Promise.all(els.map(el => el.animate({ opacity: [1, 0] }, { duration: 150, fill: 'forwards' }).finished));
     body.textContent = slide.text;
-    name.textContent = slide.name;
+    author.textContent = slide.name;
     await Promise.all(els.map(el => el.animate({ opacity: [0, 1] }, { duration: 150 }).finished));
     for (const el of els) el.getAnimations().forEach(a => a.cancel());
     return;
@@ -652,12 +688,12 @@ async function swapText(slide, dir) {
   const out = els.flatMap(splitLines);
   await moveLines(out, 0, -105 * dir, EASE_IN, 320);
   body.textContent = slide.text;
-  name.textContent = slide.name;
+  author.textContent = slide.name;
   const inn = els.flatMap(splitLines);
   await moveLines(inn, 105 * dir, 0, EASE_OUT, 520);
 
   body.textContent = slide.text;
-  name.textContent = slide.name;
+  author.textContent = slide.name;
 }
 
 async function swapPhoto(slide) {
@@ -702,13 +738,14 @@ async function go(dir) {
   if (busy) return;
   busy = true;
   reserveHeight();
-  live.setAttribute('aria-busy', 'true');
+  region.setAttribute('aria-busy', 'true');
   current = (current + dir + slides.length) % slides.length;
   const slide = slides[current];
   await Promise.all([swapPhoto(slide), swapText(slide, dir)]);
 
   reserveHeight();
-  live.setAttribute('aria-busy', 'false');
+  announceSlide();
+  region.setAttribute('aria-busy', 'false');
   busy = false;
 }
 

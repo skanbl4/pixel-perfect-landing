@@ -38,7 +38,7 @@
 .quote__arrow svg { transition: translate .2s ease; }
 .quote__arrow--prev:hover svg { translate: -6px 0; }
 .quote__arrow--next:hover svg { translate: 6px 0; }
-.quote__arrow:focus-visible { outline: 2px solid var(--color-dark); outline-offset: 6px; }
+.quote__arrow:focus-visible { outline: 2px solid var(--color-dark); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   .quote__arrow svg { transition: none; }

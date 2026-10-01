@@ -17,16 +17,17 @@
 <link rel="stylesheet" href="css/live.css">
 <script src="js/live.js" defer></script>
 
-<!-- Hide the title and illustrations before the first paint; show them anyway after 3 s -->
+<!-- Hide the title and illustrations before the first paint; show them anyway
+     if the effects have not started 3 s after the markup is parsed -->
 <script>
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const root = document.documentElement;
     root.classList.add('fx-art');
     if (window.CSS && CSS.highlights) root.classList.add('is-typing');
-    setTimeout(() => {
+    addEventListener('DOMContentLoaded', () => setTimeout(() => {
       if (!root.dataset.typing) root.classList.remove('is-typing');
       if (!root.dataset.art) root.classList.remove('fx-art');
-    }, 3000);
+    }, 3000));
   }
 </script>
 </head>
@@ -70,17 +71,17 @@
       <div class="hero__text">
         <p class="eyebrow">Risus praesent vulputate.</p>
         <h1 class="hero__title"><span class="hero__title-lead">Cursus Integer</span> Consequat Tristique.<span class="caret" aria-hidden="true"></span></h1>
-        <ul class="pills">
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Cursus Integer</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Integer Consequat</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Tellus Euismod Pellentesque</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Aliquot Tristique</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Pellentesque Tempus</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Mauris Fermentum Praesent</span></li>
+        <ul class="pills" role="list">
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Cursus Integer</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Integer Consequat</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Tellus Euismod Pellentesque</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Aliquot Tristique</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Pellentesque Tempus</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Mauris Fermentum Praesent</span></li>
         </ul>
-        <a class="btn btn--accent" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--accent" href="#">Lorem Ipsum <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-      <img class="hero__art" src="../assets/img/hero-woman-laptop.svg" alt="" width="684" height="501">
+      <img class="hero__art" src="../assets/img/hero-woman-laptop.svg" alt="" width="684" height="501" fetchpriority="high">
     </div>
   </section>
 
@@ -90,9 +91,9 @@
         <h2 class="intro__title">Phasellus a vitae iaculis magna eleifend pulvinar velit odio.</h2>
         <p class="lead"><a href="#">Vulputate et vulputate suspendisse natoque!</a></p>
         <p class="intro__body">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis vulputate et vulputate suspendisse natoque id tellus consectetur pulvinar et.</p>
-        <a class="btn btn--dark" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--dark" href="#">Lorem Ipsum <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-      <img class="intro__art" src="../assets/img/intro-woman-chat.svg" alt="" width="622" height="503">
+      <img class="intro__art" src="../assets/img/intro-woman-chat.svg" alt="" width="622" height="503" loading="lazy">
     </div>
   </section>
 
@@ -101,29 +102,29 @@
       <div class="steps__text">
         <p class="steps__kicker">Quisque porttitor vitae vel amet neque scelerisque mattis. Consectetur nibh velit magna consectetur leo.</p>
         <h2 class="steps__title">Cursus Integer Conseq Aliquam Tristique.</h2>
-        <a class="btn btn--light" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--light" href="#">Lorem Ipsum <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-      <ul class="cards">
+      <ul class="cards" role="list">
         <li class="card card--light">
-          <img class="card__icon" src="../assets/img/cards-icon-1.png" alt="" width="60" height="60">
+          <img class="card__icon" src="../assets/img/cards-icon-1.png" alt="" width="60" height="60" loading="lazy">
           <p class="card__num">1<span class="card__dot">.</span></p>
           <h3 class="card__title">Phasellus Vitae</h3>
           <p class="card__meta"><b>Quisque</b><br>Porttitor Vitae Vel Amet</p>
         </li>
         <li class="card card--accent">
-          <img class="card__icon" src="../assets/img/cards-icon-2.png" alt="" width="50" height="50">
+          <img class="card__icon" src="../assets/img/cards-icon-2.png" alt="" width="50" height="50" loading="lazy">
           <p class="card__num">2<span class="card__dot">.</span></p>
           <h3 class="card__title">Iaculis Magna</h3>
           <p class="card__meta"><b>Porttitor</b><br>Neque Scelerisque Mattis.</p>
         </li>
         <li class="card card--accent">
-          <img class="card__icon" src="../assets/img/cards-icon-3.png" alt="" width="50" height="50">
+          <img class="card__icon" src="../assets/img/cards-icon-3.png" alt="" width="50" height="50" loading="lazy">
           <p class="card__num">3<span class="card__dot">.</span></p>
           <h3 class="card__title">Eleifend Pulvinar</h3>
           <p class="card__meta"><b>Vitae</b><br>Consectetur Nibh Velit</p>
         </li>
         <li class="card card--light">
-          <img class="card__icon" src="../assets/img/cards-icon-4.png" alt="" width="50" height="50">
+          <img class="card__icon" src="../assets/img/cards-icon-4.png" alt="" width="50" height="50" loading="lazy">
           <p class="card__num">4<span class="card__dot">.</span></p>
           <h3 class="card__title">Velit Odio Phir</h3>
           <p class="card__meta"><b>Ametneq</b><br>Magna Consectetur Leo.</p>
@@ -133,18 +134,18 @@
   </section>
 
   <div class="quote-slot">
-  <article class="quote">
-    <img class="quote__photo" src="../assets/img/testimonial-photo.jpg" alt="Holly Davidson" width="472" height="472">
+  <section class="quote">
+    <img class="quote__photo" src="../assets/img/testimonial-photo.jpg" alt="Holly Davidson" width="472" height="472" loading="lazy">
     <div class="quote__text" aria-live="polite">
       <h2 class="quote__title">What our customers thought?</h2>
-      <p class="quote__body">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</p>
+      <blockquote class="quote__body">Euismod magna id purus eget nunc ligula suspendisse dui netus. Condimentum blandit rutrum at mauris enim pulvinar duis etiam duis.</blockquote>
       <p class="quote__name">Holly Davidson</p>
       <div class="quote__nav">
-        <button class="quote__arrow quote__arrow--prev" type="button" aria-label="Previous"><svg><use href="#i-arrow-solid"/></svg></button>
-        <button class="quote__arrow quote__arrow--next" type="button" aria-label="Next"><svg><use href="#i-arrow-solid"/></svg></button>
+        <button class="quote__arrow quote__arrow--prev" type="button" aria-label="Previous"><svg aria-hidden="true"><use href="#i-arrow-solid"/></svg></button>
+        <button class="quote__arrow quote__arrow--next" type="button" aria-label="Next"><svg aria-hidden="true"><use href="#i-arrow-solid"/></svg></button>
       </div>
     </div>
-  </article>
+  </section>
   </div>
 
   <section class="band band--accent benefits">
@@ -152,25 +153,25 @@
       <div class="benefits__text">
         <h2 class="benefits__title">Cursus Integer consequat Tristique.</h2>
 
-        <ul class="pills pills--mobile">
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Cursus Integer</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Integer Consequat</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Tellus Euismod Pellentesque</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Aliquot Tristique</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Pellentesque Tempus</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Mauris Fermentum Praesent</span></li>
+        <ul class="pills pills--mobile" role="list">
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Cursus Integer</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Integer Consequat</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Tellus Euismod Pellentesque</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Aliquot Tristique</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Pellentesque Tempus</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Mauris Fermentum Praesent</span></li>
         </ul>
-        <ul class="pills pills--desktop">
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Ac viverra sed risus praesent vulputate.</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Natoqu consectetur pulvinar.</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Sollicitudin ornare tempus nulla varius pulvinar.</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Varius pulvinar</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Natoque id tellus consectetur</span></li>
-          <li class="pill"><svg class="pill__icon"><use href="#i-check"/></svg><span class="pill__text">Vulputate et vulputate suspendisse</span></li>
+        <ul class="pills pills--desktop" role="list">
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Ac viverra sed risus praesent vulputate.</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Natoqu consectetur pulvinar.</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Sollicitudin ornare tempus nulla varius pulvinar.</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Varius pulvinar</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Natoque id tellus consectetur</span></li>
+          <li class="pill"><svg class="pill__icon" aria-hidden="true"><use href="#i-check"/></svg><span class="pill__text">Vulputate et vulputate suspendisse</span></li>
         </ul>
-        <a class="btn btn--dark" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--dark" href="#">Lorem Ipsum <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-      <img class="benefits__art" src="../assets/img/benefits-woman-open.svg" alt="" width="622" height="569">
+      <img class="benefits__art" src="../assets/img/benefits-woman-open.svg" alt="" width="622" height="569" loading="lazy">
     </div>
   </section>
 
@@ -215,7 +216,7 @@
     <div class="footer__inner">
       <div class="footer__cta">
         <h2 class="footer__title">Vulputate et pulvinar ethre Suspendisse tellus consecteur</h2>
-        <a class="btn btn--accent btn--sm" href="#">Lorem Ipsum <svg class="btn__icon"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--accent btn--sm" href="#">Lorem Ipsum <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="footer__bottom">
         <p class="footer__copy">Copyright &copy; 2022 Lorem Ipsum.</p>

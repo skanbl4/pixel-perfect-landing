@@ -47,7 +47,9 @@ re-saved), and three accordion lines are off by 4–6 px.
 and mobile frames disagree in places: two title lines set in different sizes,
 a different list in the third band, Title Case answers, different footer links.
 Each frame is matched as drawn. A difference from the mockup is a bug, even
-when it looks nicer.
+when it looks nicer. That includes the mockup's yellow on white (contrast
+1.8:1 on the accordion signs and the "next" arrow): reproduced knowingly,
+not overlooked.
 
 ## The live version
 
@@ -57,7 +59,8 @@ interaction, it is pixel-identical to the static landing**, and a screenshot
 comparison checks that.
 
 - **Typing title.** The hero title is typed letter by letter at an uneven,
-  human pace, once per page load. The caret then blinks five times and stops.
+  human pace, once per page load. The caret keeps blinking while the title is
+  on screen and rests, solid as in the mockup, once it scrolls away.
   The letters are revealed with the CSS Custom Highlight API instead of being
   wrapped in spans, so the line breaks never change and nothing moves.
 - **Illustrations.** Each illustration fades and slides in once, with one live
@@ -74,8 +77,8 @@ comparison checks that.
   text slides line by line. Swipe works on touch screens. The card height stays
   fixed across all slides.
 
-All effects respect `prefers-reduced-motion`, nothing loops forever
-(WCAG 2.2.2), and keyboard focus is never scrolled out of view.
+All effects respect `prefers-reduced-motion`, every motion stops as soon as
+its element leaves the screen, and keyboard focus is never scrolled out of view.
 
 The effects are verified with a small Chrome DevTools Protocol driver
 (plain Node, no dependencies) that runs in real time. This matters because

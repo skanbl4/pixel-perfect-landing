@@ -1,14 +1,9 @@
 /* Design tokens measured from the mockup. Some font sizes are fractional because the mockup uses them. */
 :root {
   --color-white:      #FFFFFF;
-  --color-white-warm: #FFFAEB;
   --color-yellow:     #F9B800;
   --color-dark:       #262626;
-  --color-grey:       #787878;
-  --color-light-0:    #FFF1C9;
   --color-light-1:    #FEEDBC;
-  --color-light-2:    #FFE18B;
-  --color-light-3:    #D3B970;
   --color-dark-80:  rgb(38 38 38 / .8);
   --color-dark-12:  rgb(38 38 38 / .12);
 
@@ -21,15 +16,13 @@
 
   --fs-h1: 32px;   --lh-h1: 40px;
   --lead-scale: 1.125;
-  --fs-h2: 24px;   --lh-h2: 1.25;
-
   --fs-h3: 36px;   --lh-h3: 1.33;
   --fs-card-title: 23px;
   --fs-quote-title: 30px;
   --fs-eyebrow: 16px;
 
   --fs-body:   20px; --lh-body: 1.35;
-  --fs-body-s: 16px; --lh-body-s: 1.5;
+  --fs-body-s: 16px;
   --fs-body-s-b: 18px;
   --fs-button: 18px;
 
@@ -75,8 +68,6 @@
     --quote-w:   560px;
     --card-w:    560px;
     --fs-h1: 44px;
-    --fs-h2: 28px;
-
     --lead-scale: 1;
   }
 }
@@ -85,12 +76,11 @@
 @media (min-width: 1140px) {
   :root {
     --fs-h1: clamp(56px, 4.9vw, 80px);   --lh-h1: 1.125;
-    --fs-h2: 72px;   --lh-h2: 1.25;
     --fs-h3: 60px;   --lh-h3: 72px;
     --fs-eyebrow: 29.7px;
 
-    --fs-body:   20px; --lh-body: 1.33;
-    --fs-body-s: 16.5px; --lh-body-s: 1.4;
+    --lh-body: 1.33;
+    --fs-body-s: 16.5px;
     --fs-body-s-b: 19px;
     --fs-button: 24px;
     --fs-pill: 20.6px;
@@ -114,7 +104,6 @@
     --h-header:  96px;  --r-header: 48px;
     --h-pill:    58px;  --r-pill:   29px;
     --h-button:  78px;  --r-button: 39px;  --w-button: 350px;
-    --gap-pill:  14px;
 
     --card-w: min(350px, 21.5vw);  --card-h: 400px;  --r-card: 60px;
     --gap-card: min(60px, 4vw);    --card-stagger: 123px;
